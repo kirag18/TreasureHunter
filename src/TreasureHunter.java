@@ -59,6 +59,7 @@ public class TreasureHunter {
             hunter.buyItem("machete",1);
             hunter.buyItem("horse",1);
             hunter.buyItem("boat",1);
+            hunter.buyItem("boot", 1);
         }
     }
 
