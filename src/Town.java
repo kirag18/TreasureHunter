@@ -11,6 +11,7 @@ public class Town {
     private Terrain terrain;
     private String printMessage;
     private boolean toughTown;
+    private boolean alreadyDug;
 
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
@@ -29,6 +30,8 @@ public class Town {
 
         // higher toughness = more likely to be a tough town
         toughTown = (Math.random() < toughness);
+
+        alreadyDug = false;
     }
 
     public Terrain getTerrain() {
@@ -62,6 +65,7 @@ public class Town {
     public boolean leaveTown() {
         boolean canLeaveTown = terrain.canCrossTerrain(hunter);
         if (canLeaveTown) {
+            alreadyDug = false;
             String item = terrain.getNeededItem();
             printMessage = "You used your " + item + " to cross the " + terrain.getTerrainName() + ".";
             if (checkItemBreak()) {
@@ -133,7 +137,7 @@ public class Town {
         } else if (rnd < .8) {
             return new Terrain("Desert", "Water");
         } else if (rnd < 1.0){
-            return new Terrain("Marsh", "Boots");
+            return new Terrain("Marsh", "Boot");
         } else {
             return new Terrain("Jungle", "Machete");
         }
@@ -147,5 +151,25 @@ public class Town {
     private boolean checkItemBreak() {
         double rand = Math.random();
         return (rand < 0.5);
+    }
+
+    public void dig(){
+        if (!hunter.hasItemInKit("shovel")){
+            printMessage = "You can't dig for gold without a shovel";
+        } else if (alreadyDug){
+           printMessage = "You already dug for gold in this town";
+        } else{
+            alreadyDug = true;
+            double rand = Math.random();
+            if (rand >0.49){
+                int extra = (int) (Math.random()*20) + 1;
+                printMessage = "You dug up " + extra + " gold";
+                hunter.changeGold(extra);
+            }else {
+                printMessage = "You dug but only found dirt";
+            }
+
+        }
+
     }
 }

@@ -53,13 +53,14 @@ public class TreasureHunter {
         if (hard.equals("y")) {
             hardMode = true;
         }else if (hard.equals("test")){
-            hunter.changeGold(85);
-            hunter.buyItem("water",1);
-            hunter.buyItem("rope",1);
-            hunter.buyItem("machete",1);
-            hunter.buyItem("horse",1);
-            hunter.buyItem("boat",1);
-            hunter.buyItem("boot", 1);
+            hunter.changeGold(80);
+            hunter.addItem("water");
+            hunter.addItem("rope");
+            hunter.addItem("machete");
+            hunter.addItem("horse");
+            hunter.addItem("boat");
+            hunter.addItem("boot");
+            //hunter.addItem("shovel");
         }
     }
 
@@ -112,6 +113,7 @@ public class TreasureHunter {
             System.out.println("(E)xplore surrounding terrain.");
             System.out.println("(M)ove on to a different town.");
             System.out.println("(L)ook for trouble!");
+            System.out.println("(D)ig for gold.");
             System.out.println("Give up the hunt and e(X)it.");
             System.out.println();
             System.out.print("What's your next move? ");
@@ -143,7 +145,10 @@ public class TreasureHunter {
             currentTown.lookForTrouble();
         } else if (choice.equals("x")) {
             System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
-        } else {
+        } else if(choice.equals("d")){
+            currentTown.dig();
+
+        }else {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }
     }
