@@ -60,7 +60,7 @@ public class TreasureHunter {
             hunter.addItem("horse");
             hunter.addItem("boat");
             hunter.addItem("boot");
-            //hunter.addItem("shovel");
+            hunter.addItem("shovel");
         }
     }
 
