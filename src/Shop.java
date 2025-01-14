@@ -87,7 +87,7 @@ public class Shop {
         str += "Machete: " + MACHETE_COST + " gold\n";
         str += "Horse: " + HORSE_COST + " gold\n";
         str += "Boat: " + BOAT_COST + " gold\n";
-        /*str += "Boot: " + BOOT_COST */
+        str += "Boot: " + BOOT_COST + " gold\n";
         return str;
     }
 
@@ -151,6 +151,8 @@ public class Shop {
             return HORSE_COST;
         } else if (item.equals("boat")) {
             return BOAT_COST;
+        } else if (item.equals("boot")) {
+            return BOOT_COST;
         } else {
             return 0;
         }
