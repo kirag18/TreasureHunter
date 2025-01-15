@@ -15,6 +15,7 @@ public class Shop {
     private static final int BOAT_COST = 20;
     private static final int BOOT_COST = 8;
     private static final int SHOVEL_COST = 8;
+    private static final int SWORD_COST = 0;
 
     // static variables
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -22,13 +23,17 @@ public class Shop {
     // instance variables
     private double markdown;
     private Hunter customer;
+    private boolean samuraiMode;
+    private boolean hasSword;
 
     /**
      * The Shop constructor takes in a markdown value and leaves customer null until one enters the shop.
      *
      * @param markdown Percentage of markdown for selling items in decimal format.
      */
-    public Shop(double markdown) {
+    public Shop(double markdown, boolean samuraiMode) {
+        this.samuraiMode = samuraiMode;
+        hasSword = false;
         this.markdown = markdown;
         customer = null; // customer is set in the enter method
     }
@@ -49,21 +54,42 @@ public class Shop {
             System.out.print("What're you lookin' to buy? ");
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, true);
-            if (cost == 0) {
-                System.out.println("We ain't got none of those.");
-            } else {
+            if (samuraiMode && item.equals("sword")){
                 System.out.print("It'll cost you " + cost + " gold. Buy it (y/n)? ");
                 String option = SCANNER.nextLine().toLowerCase();
                 if (option.equals("y")) {
                     buyItem(item);
+                    hasSword = true;
                 }
+            }
+            else if (cost == 0) {
+                System.out.println("We ain't got none of those.");
+            } else {
+                if (hasSword){
+                    System.out.println("the shopkeeper is very scared of your sword and gives you the item for free");
+                    buyItem(item);
+                }else{
+                    System.out.print("It'll cost you " + cost + " gold. Buy it (y/n)? ");
+                    String option = SCANNER.nextLine().toLowerCase();
+                    if (option.equals("y")) {
+                        buyItem(item);
+                    }
+                }
+
             }
         } else {
             System.out.println("What're you lookin' to sell? ");
             System.out.print("You currently have the following items: " + customer.getInventory());
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, false);
-            if (cost == 0) {
+            if (samuraiMode && item.equals("sword")){
+                System.out.print("It'll get you " + cost + " gold. Sell it (y/n)? ");
+                String option = SCANNER.nextLine().toLowerCase();
+                if (option.equals("y")) {
+                    sellItem(item);
+                    hasSword = false;
+                }
+            } else if (cost == 0) {
                 System.out.println("We don't want none of those.");
             } else {
                 System.out.print("It'll get you " + cost + " gold. Sell it (y/n)? ");
@@ -90,6 +116,9 @@ public class Shop {
         str += "Boat: " + BOAT_COST + " gold\n";
         str += "Boot: " + BOOT_COST + " gold\n";
         str += "Shovel: " + SHOVEL_COST + " gold\n";
+        if (samuraiMode){
+            str += "Sword: "+SWORD_COST + " gold\n";
+        }
         return str;
     }
 
@@ -100,7 +129,7 @@ public class Shop {
      */
     public void buyItem(String item) {
         int costOfItem = checkMarketPrice(item, true);
-        if (customer.buyItem(item, costOfItem)) {
+        if (customer.buyItem(item, costOfItem, hasSword)) {
             System.out.println("Ye' got yerself a " + item + ". Come again soon.");
         } else {
             System.out.println("Hmm, either you don't have enough gold or you've already got one of those!");

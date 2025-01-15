@@ -20,7 +20,7 @@ public class Hunter {
      */
     public Hunter(String hunterName, int startingGold) {
         this.hunterName = hunterName;
-        kit = new String[7];
+        kit = new String[8];
         gold = startingGold;
         collectedTreasure = new String[4];
         idx = 0;
@@ -64,8 +64,15 @@ public class Hunter {
      * @param costOfItem The cost of the item.
      * @return true if the item is successfully bought.
      */
-    public boolean buyItem(String item, int costOfItem) {
-        if (costOfItem == 0 || gold < costOfItem || hasItemInKit(item)) {
+    public boolean buyItem(String item, int costOfItem, boolean hasSword) {
+        if (hasSword){
+            if (hasItemInKit(item)){
+                System.out.println("you already have this item"); //todo: make sure too much doesnt print
+            }else{
+                addItem(item);
+                return true;
+            }
+        } else if (costOfItem == 0 || gold < costOfItem || hasItemInKit(item)) {
             return false;
         }
         gold -= costOfItem;

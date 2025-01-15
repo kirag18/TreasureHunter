@@ -15,6 +15,7 @@ public class Town {
     private String treasure;
     private boolean searched;
     private boolean easyMode;
+    private boolean samuraiMode;
 
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
@@ -22,8 +23,8 @@ public class Town {
      * @param shop The town's shoppe.
      * @param toughness The surrounding terrain.
      */
-    public Town(Shop shop, double toughness, boolean easyMode) {
-
+    public Town(Shop shop, double toughness, boolean easyMode, boolean samuraiMode) {
+        this.samuraiMode = samuraiMode;
         this.easyMode = easyMode;
         this.shop = shop;
         this.terrain = getNewTerrain();
@@ -143,6 +144,8 @@ public class Town {
             double loseChance = noTroubleChance;
             if (easyMode){
                 loseChance = 0.1;
+            } else if (samuraiMode){
+                loseChance = 0;
             }
             printMessage = Colors.RED + "You want trouble, stranger!  You got it!\nOof! Umph! Ow!\n";
             int goldDiff = (int) (Math.random() * 10) + 1;
