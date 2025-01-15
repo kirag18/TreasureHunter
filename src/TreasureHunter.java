@@ -16,6 +16,7 @@ public class TreasureHunter {
     private Town currentTown;
     private Hunter hunter;
     private boolean hardMode;
+    private boolean easyMode;
 
     /**
      * Constructs the Treasure Hunter game.
@@ -25,6 +26,7 @@ public class TreasureHunter {
         currentTown = null;
         hunter = null;
         hardMode = false;
+        easyMode = false;
     }
 
     /**
@@ -48,9 +50,9 @@ public class TreasureHunter {
         // set hunter instance variable
         hunter = new Hunter(name, 20);
 
-        System.out.print("Hard mode? (y/n): ");
+        System.out.print("Enter mode(e or n or h): ");
         String hard = SCANNER.nextLine().toLowerCase();
-        if (hard.equals("y")) {
+        if (hard.equals("h")) {
             hardMode = true;
         }else if (hard.equals("test")){
             hunter.changeGold(80);
@@ -61,6 +63,12 @@ public class TreasureHunter {
             hunter.addItem("boat");
             hunter.addItem("boot");
             hunter.addItem("shovel");
+        }else if (hard.equals("e")){
+            easyMode = true;
+            hunter.changeGold(20);
+        } else if (!hard.equals("n")) {
+            System.out.println("you didnt put in a valid option so we gave you normal mode");
+
         }
     }
 
@@ -76,6 +84,10 @@ public class TreasureHunter {
 
             // and the town is "tougher"
             toughness = 0.75;
+        } else if (easyMode) {
+            markdown = 1;
+            //toughness = 0.2;
+
         }
 
         // note that we don't need to access the Shop object
@@ -86,7 +98,7 @@ public class TreasureHunter {
         // creating the new Town -- which we need to store as an instance
         // variable in this class, since we need to access the Town
         // object in other methods of this class
-        currentTown = new Town(shop, toughness);
+        currentTown = new Town(shop, toughness, easyMode);
 
         // calling the hunterArrives method, which takes the Hunter
         // as a parameter; note this also could have been done in the
