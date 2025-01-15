@@ -12,6 +12,8 @@ public class Town {
     private String printMessage;
     private boolean toughTown;
     private boolean alreadyDug;
+    private String treasure;
+    private boolean searched;
     private boolean easyMode;
 
     /**
@@ -35,6 +37,35 @@ public class Town {
         toughTown = (Math.random() < toughness);
 
         alreadyDug = false;
+        String[] treasureList = {"a crown", "a trophy", "a gem", "dust"};
+        int random = (int) (Math.random() * 3);
+        treasure = treasureList[random];
+        searched = false;
+    }
+
+    public void treasureHunt(){
+        boolean containsTreasure = false;
+        for(int i = hunter.getCollectedTreasure().length - 1; i > -1 ; i--){
+            if(hunter.getCollectedTreasure()[i] == null){
+                containsTreasure = false;
+            } else if(hunter.getCollectedTreasure()[i].equals(treasure)){
+                containsTreasure = true;
+            }
+
+        }
+        if(containsTreasure){
+            System.out.println("You already have this treasure.");
+        }
+        if(searched){
+            System.out.println("You have already searched this town.");
+        }
+        else if (!searched && !containsTreasure ){
+            if(!treasure.equals("dust")){
+                System.out.println("You found " + treasure +"!");
+                hunter.addCollectedTreasure(treasure);
+            }
+            searched = true;
+        }
     }
 
     public Terrain getTerrain() {
@@ -74,10 +105,14 @@ public class Town {
                 hunter.removeItemFromKit(item);
                 printMessage += "\nUnfortunately, you lost your " + item;
             }
+            String[] treasureList = {"a crown", "a trophy", "a gem", "dust"};
+            int random = (int) (Math.random() * 3);
+            treasure = treasureList[random];
+            searched = false;
             return true;
         }
 
-        printMessage = "You can't leave town, " + hunter.getHunterName() + ". You don't have a " + terrain.getNeededItem() + ".";
+        printMessage = "You can't leave town, " + hunter.getHunterName() + ". You don't have " + terrain.getNeededItem() + ".";
         return false;
     }
 
@@ -124,7 +159,7 @@ public class Town {
     }
 
     public String infoString() {
-        return "This nice little town is surrounded by " + terrain.getTerrainName() + ".";
+        return "This nice little town is surrounded by a " + terrain.getTerrainName() + ".";
     }
 
     /**

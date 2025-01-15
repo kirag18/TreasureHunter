@@ -9,6 +9,8 @@ public class Hunter {
     private String hunterName;
     private String[] kit;
     private int gold;
+    private String[] collectedTreasure;
+    private int idx;
 
     /**
      * The base constructor of a Hunter assigns the name to the hunter and an empty kit.
@@ -20,7 +22,11 @@ public class Hunter {
         this.hunterName = hunterName;
         kit = new String[7];
         gold = startingGold;
+        collectedTreasure = new String[4];
+        idx = 0;
     }
+
+
 
     //Accessors
     public String getHunterName() {
@@ -29,6 +35,16 @@ public class Hunter {
 
     public int getGold() {
         return gold;
+    }
+
+    public String[] getCollectedTreasure(){
+        return collectedTreasure;
+    }
+
+    public void addCollectedTreasure(String treasure){
+        collectedTreasure[idx] = treasure;
+        idx++;
+
     }
 
     /**
