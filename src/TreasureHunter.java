@@ -118,7 +118,7 @@ public class TreasureHunter {
      */
     private void showMenu() {
         String choice = "";
-        while (!choice.equals("x") && hunter.getGold()>=0) {
+        while (!choice.equals("x") && hunter.getGold()>=0 && hunter.getIdx()<3) {
             System.out.println();
             System.out.println(currentTown.getLatestNews());
             System.out.println("***");
@@ -140,6 +140,8 @@ public class TreasureHunter {
         if (hunter.getGold()<0){
             System.out.println(currentTown.getLatestNews());
             System.out.println("game over. you ran out of gold");
+        } else if (hunter.getIdx() == 3){
+            System.out.println("YOU WON!!! You found all of the treasure");
         }
     }
 

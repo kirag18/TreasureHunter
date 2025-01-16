@@ -55,14 +55,14 @@ public class Town {
 
         }
         if(containsTreasure){
-            System.out.println("You already have this treasure.");
+            printMessage = "You found a " +treasure+ " but you already have this treasure ";
         }
         if(searched){
-            System.out.println("You have already searched this town.");
+            printMessage = "You have already searched this town.";
         }
-        else if (!searched && !containsTreasure ){
+        else if (!containsTreasure ){
             if(!treasure.equals("dust")){
-                System.out.println("You found " + treasure +"!");
+                printMessage = "You found " + treasure +"!";
                 hunter.addCollectedTreasure(treasure);
             }
             searched = true;

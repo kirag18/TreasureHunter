@@ -40,6 +40,9 @@ public class Hunter {
     public String[] getCollectedTreasure(){
         return collectedTreasure;
     }
+    public int getIdx(){
+        return idx;
+    }
 
     public void addCollectedTreasure(String treasure){
         collectedTreasure[idx] = treasure;
