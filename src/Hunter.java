@@ -64,15 +64,21 @@ public class Hunter {
      * @param costOfItem The cost of the item.
      * @return true if the item is successfully bought.
      */
-    public boolean buyItem(String item, int costOfItem, boolean hasSword) {
+    public boolean buyItem(String item, int costOfItem, boolean hasSword, boolean samuraiMode) {
         if (hasSword){
             if (hasItemInKit(item)){
-                System.out.println("you already have this item"); //todo: make sure too much doesnt print
+                System.out.println("But wait... you already have this item so the shopkeeper doesn't give you another"); //todo: make sure too much doesnt print
             }else{
                 addItem(item);
                 return true;
             }
-        } else if (costOfItem == 0 || gold < costOfItem || hasItemInKit(item)) {
+        } else if (samuraiMode && !hasItemInKit(item)){
+            addItem(item);
+            gold -= costOfItem;
+            return true;
+
+        }
+        else if (costOfItem == 0 || gold < costOfItem || hasItemInKit(item)) {
             return false;
         }
         gold -= costOfItem;
