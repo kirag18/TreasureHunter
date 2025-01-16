@@ -44,6 +44,21 @@ public class Hunter {
         return idx;
     }
 
+    public String treasureInfo(){
+        String str = "Treasures found: ";
+        if(idx == 0){
+                str = "Treasures found: none";
+        }
+        else {
+            for(int i = getCollectedTreasure().length - 1; i > -1 ; i--){
+                if(!(getCollectedTreasure()[i] == null)){
+                    str += " " + getCollectedTreasure()[i];
+                }
+            }
+        }
+        return str;
+    }
+
     public void addCollectedTreasure(String treasure){
         collectedTreasure[idx] = treasure;
         idx++;
